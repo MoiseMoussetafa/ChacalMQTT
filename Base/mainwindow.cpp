@@ -11,7 +11,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     // Affichage des informations dans les textEdit
     ui->textEdit1->setPlainText("Broker : mqtt://broker.emqx.io:1883");
-    ui->textEdit2->setPlainText("Topic : /ynov/bordeaux/NomDuGitHubDuGroupe");
+    ui->textEdit2->setPlainText("Topic : /ynov/bordeaux/ChacalMQTT");
     ui->textEdit3->setPlainText("QoS 2");
     ui->textEdit4->setPlainText("Message décodé = ");
 }

@@ -20,8 +20,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
-    inc/common.h \
-    inc/send_png_on_topic.h
+    inc/common.h
     inc/send_png_on_topic.h
 
 RESOURCES += \

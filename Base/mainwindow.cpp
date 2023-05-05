@@ -24,7 +24,7 @@ void MainWindow::processReceivedImage(QImage image)
 {
     pixmap_image = QPixmap::fromImage(image);
     ui->imageLabel->setPixmap(pixmap_image);
-    qDebug() << "New image";
+    qDebug() << "Image updated";
 }
 
 MainWindow::~MainWindow()

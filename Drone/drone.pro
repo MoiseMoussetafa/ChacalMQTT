@@ -1,3 +1,5 @@
+QT += mqtt
+
 CONFIG += c++17 console
 CONFIG -= app_bundle
 
@@ -9,7 +11,8 @@ INCLUDEPATH += \
     inc/
 
 SOURCES += \
-    src/main.cpp
+    src/main.cpp \
+    src/send_png_on_topic.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -21,3 +24,4 @@ HEADERS += \
 
 RESOURCES += \
     ressources.qrc
+    src/send_png_on_topic.h

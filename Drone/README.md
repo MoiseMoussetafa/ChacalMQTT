@@ -2,7 +2,7 @@ Vous aurez pour mission de créer un programme console avec Qt en C++ qui charge
 
 Le fichier sera envoyé 
 - Sur le broker : mqtt://broker.emqx.io:1883
-- Topic : /ynov/bordeaux/NomDuGitHubDuGroupe 
+- Topic : /ynov/bordeaux/ChacalMQTT 
 - QoS 2
 
 Le programme devra être le plus léger possible, chaque tentative d’optimisation faisant l’objet de la création d’une branche dans le GitHub.

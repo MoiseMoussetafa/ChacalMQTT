@@ -49,18 +49,20 @@ int main(int argc, char *argv[])
     mqttClient.setHostname("broker.emqx.io");
     mqttClient.setPort(1883);
 
-    QObject::connect(&mqttClient, &QMqttClient::connected, [&](){
-        qDebug() << "Connected";
+    QObject::connect(&mqttClient, &QMqttClient::connected, [&]()
+    {
         const QString s_topic("/ynov/bordeaux/ChacalMQTT");
         const quint8 qos_var = 2;
         mqttClient.subscribe(s_topic,qos_var);
     });
 
-    QObject::connect(&mqttClient, &QMqttClient::disconnected, [&](){
-        qDebug() << "Disconnected";
+    QObject::connect(&mqttClient, &QMqttClient::disconnected, [&]()
+    {
     });
 
-    QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message, const QMqttTopicName& topic){
+
+    QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message_tab, const QMqttTopicName& topic)
+    {
         QImage image;
         image.loadFromData(message, "PNG");
 
@@ -69,14 +71,11 @@ int main(int argc, char *argv[])
         emit w.signalCode(gpsCoordinates_decoded);
 
         emit w.signalImage(image);
-        qDebug() << "Message received on topic:" << topic.name() << "size:" << message.size();
-        qDebug() << image;
-        QString fileName = QString("received_image.png");
-        image.save(fileName);
+        QString s_fileName = QString("../received_image.png");
+        image.save(s_fileName);
     });
 
     mqttClient.connectToHost();
-
     w.show();
     return a.exec();
 }

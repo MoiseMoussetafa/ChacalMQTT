@@ -60,12 +60,16 @@ int main(int argc, char *argv[])
     {
     });
 
+
     QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message_tab, const QMqttTopicName& topic)
     {
         QImage image;
-        image.loadFromData(message_tab, "PNG");
-        QString s_gpsCoordinates_decoded = decodeCoordinates(image);
-        emit w.signalCode(s_gpsCoordinates_decoded);
+        image.loadFromData(message, "PNG");
+
+        QString gpsCoordinates_decoded = decodeCoordinates(image);
+        qDebug() << gpsCoordinates_decoded;
+        emit w.signalCode(gpsCoordinates_decoded);
+
         emit w.signalImage(image);
         QString s_fileName = QString("../received_image.png");
         image.save(s_fileName);

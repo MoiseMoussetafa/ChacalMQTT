@@ -1,5 +1,4 @@
 #include "mainwindow.h"
-#include <QtMqtt/QMqttClient>
 #include <QApplication>
 #include <QtMqtt/QMqttClient>
 #include <QtGui/QImage>
@@ -15,21 +14,21 @@ int main(int argc, char *argv[])
     mqttClient.setPort(1883);
 
     QObject::connect(&mqttClient, &QMqttClient::connected, [&](){
-        qDebug() << "Connected!";
+        qDebug() << "Connected";
         const QString s_topic("/ynov/bordeaux/ChacalMQTT");
         const quint8 qos_var = 2;
         mqttClient.subscribe(s_topic,qos_var);
     });
 
     QObject::connect(&mqttClient, &QMqttClient::disconnected, [&](){
-        qDebug() << "Disconnected!";
+        qDebug() << "Disconnected";
     });
 
     QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message, const QMqttTopicName& topic){
-        qDebug() << "Message received on topic:" << topic.name() << "size:" << message.size();
-
         QImage image;
         image.loadFromData(message, "PNG");
+        emit w.signalImage(image);
+        qDebug() << "Message received on topic:" << topic.name() << "size:" << message.size();
         qDebug() << image;
         QString fileName = QString("received_image.png");
         image.save(fileName);

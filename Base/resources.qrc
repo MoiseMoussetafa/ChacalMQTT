@@ -1,5 +1,5 @@
 <RCC>
     <qresource prefix="/prefix_img">
-        <file>DroneIMG37337.png</file>
+        <file>../build-Base_code-Desktop_Qt_5_15_2_GCC_64bit-Debug/received_image.png</file>
     </qresource>
 </RCC>

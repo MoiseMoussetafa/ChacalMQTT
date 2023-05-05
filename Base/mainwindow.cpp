@@ -18,6 +18,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->imageLabel->setPixmap(pixmap_image);
     ui->imageLabel->setScaledContents(true);
     connect(this, &MainWindow::signalImage, this, &MainWindow::processReceivedImage);
+
+    connect(this, &MainWindow::signalCode, this, &MainWindow::processCode);
+}
+void MainWindow::processCode(QString gpsCoordinates_decoded)
+{
+    ui->textEdit4->setPlainText(gpsCoordinates_decoded);
 }
 
 void MainWindow::processReceivedImage(QImage image)

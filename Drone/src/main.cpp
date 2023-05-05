@@ -57,6 +57,7 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
         cerr << "ERROR : Can't save image." << endl;
         return -1;
     }
+    
     image.save(&qf_outputFile, "PNG");
 
     QMqttClient client;
@@ -75,7 +76,7 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
             qDebug() << "Subscribed to topic:" << s_topic;
         }
 
-        const QString s_filePath("../DroneIMG37337.png");
+        const QString s_filePath("../build-drone-Desktop_Qt_5_12_12_GCC_64bit-Debug/DroneIMG37337_with_gps.png");
         bool success = send_png_on_topic(client, s_filePath, s_topic, qos_var);
 
         if (!success) {

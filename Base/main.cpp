@@ -50,6 +50,7 @@ int main(int argc, char *argv[])
     mqttClient.setPort(1883);
 
     QObject::connect(&mqttClient, &QMqttClient::connected, [&](){
+        qDebug() << "Connected";
         const QString s_topic("/ynov/bordeaux/ChacalMQTT");
         const quint8 qos_var = 2;
         mqttClient.subscribe(s_topic,qos_var);
@@ -59,14 +60,19 @@ int main(int argc, char *argv[])
         qDebug() << "Disconnected";
     });
 
-    QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message_tab, const QMqttTopicName& topic){
+    QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message, const QMqttTopicName& topic){
         QImage image;
-        image.loadFromData(message_tab, "PNG");
-        QString s_gpsCoordinates_decoded = decodeCoordinates(image);
-        emit w.signalCode(s_gpsCoordinates_decoded);
+        image.loadFromData(message, "PNG");
+
+        QString gpsCoordinates_decoded = decodeCoordinates(image);
+        qDebug() << gpsCoordinates_decoded;
+        emit w.signalCode(gpsCoordinates_decoded);
+
         emit w.signalImage(image);
-        QString s_fileName = QString("received_image.png");
-        image.save(s_fileName);
+        qDebug() << "Message received on topic:" << topic.name() << "size:" << message.size();
+        qDebug() << image;
+        QString fileName = QString("received_image.png");
+        image.save(fileName);
     });
 
     mqttClient.connectToHost();

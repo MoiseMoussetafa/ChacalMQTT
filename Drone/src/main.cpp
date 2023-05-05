@@ -64,32 +64,17 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
 
     qDebug() << gpsCoordinates_decoded;
 
-    QMqttClient client;
-    client.setHostname("broker.emqx.io");
-    client.setPort(1883);
-
-    QObject::connect(&client, &QMqttClient::connected, [&](void) {
-        qDebug() << "Connected to MQTT broker.";
+    QMqttClient mqttClient;
+    mqttClient.setHostname("broker.emqx.io");
+    mqttClient.setPort(1883);
+    QObject::connect(&mqttClient, &QMqttClient::connected, [&](void) {
         const QString s_topic("/ynov/bordeaux/ChacalMQTT");
         const quint8 qos_var = 2;
-
-        if (!client.subscribe(s_topic, qos_var)) {
-            qDebug() << "Error while subscribing to :" << s_topic;
-            return 1;
-        } else {
-            qDebug() << "Subscribed to topic:" << s_topic;
-        }
-
         const QString s_filePath("../build-drone-Desktop_Qt_5_12_12_GCC_64bit-Debug/DroneIMG37337_with_gps.png");
-        bool success = send_png_on_topic(client, s_filePath, s_topic, qos_var);
-
-        if (!success) {
-            qDebug() << "La publication a échoué";
-            return -1;
-        }
+        send_png_on_topic(mqttClient, s_filePath, s_topic, qos_var);
     });
 
-    client.connectToHost();
+    mqttClient.connectToHost();
     return a.exec();
 }
 

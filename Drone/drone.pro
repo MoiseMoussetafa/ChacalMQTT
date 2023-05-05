@@ -1,4 +1,5 @@
 QT -= gui
+QT += mqtt
 
 CONFIG += c++17 console
 CONFIG -= app_bundle
@@ -12,9 +13,13 @@ SUBDIRS += \
     inc/
 
 SOURCES += \
-    src/main.cpp
+    src/main.cpp \
+    src/send_png_on_topic.cpp
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+HEADERS += \
+    src/send_png_on_topic.h

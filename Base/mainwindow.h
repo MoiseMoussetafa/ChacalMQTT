@@ -18,9 +18,11 @@ class MainWindow : public QMainWindow
 
 signals:
     void signalImage(QImage);
+    void signalCode(QString);
 
 private slots:
     void processReceivedImage(QImage);
+    void processCode(QString);
 
 public:
     MainWindow(QWidget *parent = nullptr);

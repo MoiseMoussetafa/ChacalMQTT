@@ -1,4 +1,3 @@
-QT -= gui
 QT += mqtt
 
 CONFIG += c++17 console
@@ -8,8 +7,7 @@ CONFIG -= app_bundle
 # In order to do so, uncomment the following line.
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
-SUBDIRS += \
-    src/
+INCLUDEPATH += \
     inc/
 
 SOURCES += \
@@ -22,4 +20,8 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 HEADERS += \
+    inc/common.h
+
+RESOURCES += \
+    ressources.qrc
     src/send_png_on_topic.h

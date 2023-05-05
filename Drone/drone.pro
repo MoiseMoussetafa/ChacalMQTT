@@ -21,6 +21,7 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 HEADERS += \
     inc/common.h
+    inc/send_png_on_topic.h
 
 RESOURCES += \
     ressources.qrc

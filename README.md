@@ -10,4 +10,4 @@
 - 2 équipes : Drone et Base
 - Captures d'écran et code sur ce repo, séparés dans les dossiers Drone et Base
 - Pull requests, branches, commits, Readme, PAQL...
-- Pas de code commenté dans la branche main
+- Pas de code commenté dans la branche release

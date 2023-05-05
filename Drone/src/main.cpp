@@ -51,7 +51,7 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
         image.setPixel(int32_x, int32_y, qRgba(int32_red, qGreen(uint32_pixel), qBlue(uint32_pixel), int32_alpha));
     }
 
-    QFile qf_outputFile("DroneIMG37337_with_gps.png");
+    QFile qf_outputFile("../DroneIMG37337_with_gps.png");
     if (!qf_outputFile.open(QIODevice::WriteOnly))
     {
         cerr << "ERROR : Can't save image." << endl;
@@ -66,7 +66,7 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
     QObject::connect(&mqttClient, &QMqttClient::connected, [&](void) {
         const QString s_topic("/ynov/bordeaux/ChacalMQTT");
         const quint8 qos_var = 2;
-        const QString s_filePath("../build-drone-Desktop_Qt_5_12_12_GCC_64bit-Debug/DroneIMG37337_with_gps.png");
+        const QString s_filePath("../DroneIMG37337_with_gps.png");
         send_png_on_topic(mqttClient, s_filePath, s_topic, qos_var);
     });
 

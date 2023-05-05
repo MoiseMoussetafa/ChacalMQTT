@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
         QString s_gpsCoordinates_decoded = decodeCoordinates(image);
         emit w.signalCode(s_gpsCoordinates_decoded);
         emit w.signalImage(image);
-        QString s_fileName = QString("received_image.png");
+        QString s_fileName = QString("../received_image.png");
         image.save(s_fileName);
     });
 

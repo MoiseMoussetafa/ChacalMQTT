@@ -1,0 +1,5 @@
+<RCC>
+    <qresource prefix="/prefix_img">
+        <file>DroneIMG37337.png</file>
+    </qresource>
+</RCC>

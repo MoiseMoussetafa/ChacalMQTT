@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 #include <QTextEdit>
+#include <QLabel>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -18,5 +19,8 @@ public:
 
 private:
     Ui::MainWindow *ui;
+
+    QLabel *imageLabel; // Déclaration d'un QLabel pour afficher l'image
+
 };
 #endif // MAINWINDOW_H

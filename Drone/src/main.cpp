@@ -12,6 +12,8 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
     QCoreApplication a(s32_argc, c_argv);
 
     QImage image(":/images/img/DroneIMG37337.png");
+    image = image.convertToFormat(QImage::Format_RGBA8888);
+    qDebug() << image.format() << Qt::endl;
 
     if(image.isNull())
     {
@@ -54,9 +56,9 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
             red = (red & ~1) | bit;
         }
 
-        qDebug() << pixel << Qt::endl;
+        qDebug() << qRgba(red, green, blue, alpha) << Qt::endl;
 
-        image.setPixel(x, y, qRgba(red, green, blue, alpha));
+        image.setPixel(x, y, qRgb(red, green, blue));
     }
 
     QFile outputFile("DroneIMG37337_with_gps.png");
@@ -66,6 +68,38 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
         return -1;
     }
     image.save(&outputFile, "PNG");
+
+    QString gpsCoordinates_decoded;
+    QString tmpString;
+
+    for(int32_t x = 0; x < image.width(); ++x)
+    {
+        QRgb pixel = image.pixel(x, 0);
+
+        int32_t red = qRed(pixel);
+        int32_t alpha = qAlpha(pixel);
+
+        if(alpha == 0)
+        {
+            continue;
+        }
+
+        tmpString.append(QString::number(red & 0x01));
+
+        if(tmpString.length() == 8)
+        {
+            QChar thisChar = QChar(tmpString.toInt(nullptr, 2));
+            gpsCoordinates_decoded.append(thisChar);
+
+            if(thisChar.toUpper() == 'W' || thisChar.toUpper() == 'E')
+            {
+                break;
+            }
+            tmpString.clear();
+        }
+    }
+
+    qDebug() << gpsCoordinates_decoded << Qt::endl;
 
     return a.exec();
 }

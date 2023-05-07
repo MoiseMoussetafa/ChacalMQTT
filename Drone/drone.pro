@@ -14,16 +14,14 @@ SOURCES += \
     src/main.cpp \
     src/send_png_on_topic.cpp
 
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
-
 HEADERS += \
     inc/common.h \
-    inc/send_png_on_topic.h
     inc/send_png_on_topic.h
 
 RESOURCES += \
     ressources.qrc
-    src/send_png_on_topic.h
+
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target

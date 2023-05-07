@@ -70,11 +70,9 @@ int32_t main(int32_t s32_argc, char_t *c_argv_tab[])
         image.loadFromData(message_tab, "PNG");
 
         QString s_gpsCoordinates_decoded = decodeCoordinates(image);
-        emit w.signalCode(s_gpsCoordinates_decoded);
 
+        emit w.signalCode(s_gpsCoordinates_decoded);
         emit w.signalImage(image);
-        QString s_fileName = QString("../received_image.png");
-        image.save(s_fileName);
     });
 
     mqttClient.connectToHost();

@@ -8,12 +8,12 @@
 
 using namespace std;
 
-QString encodeCoordinates(QString &s_gpsCoordinates);
+QString encodeCoordinates(const QString &s_gpsCoordinates);
 
 int32_t main(int32_t s32_argc, char_t *c_argv_tab[])
 {
     QCoreApplication a(s32_argc, c_argv_tab);
-    QString s_gpsCoordinates = QString("37°42'41.9\"S 144°59'33.0\"E");
+    const QString s_gpsCoordinates = QString("37°42'41.9\"S 144°59'33.0\"E");
 
     QImage image(":/images/img/DroneIMG37337.png");
     image = image.convertToFormat(QImage::Format_RGBA8888);
@@ -24,7 +24,7 @@ int32_t main(int32_t s32_argc, char_t *c_argv_tab[])
         return -1;
     }
 
-    QString s_gpsBinary = encodeCoordinates(s_gpsCoordinates);
+    const QString s_gpsBinary = encodeCoordinates(s_gpsCoordinates);
 
     for (int32_t s32_i = 0; s32_i < s_gpsBinary.size(); ++s32_i)
     {
@@ -73,12 +73,12 @@ int32_t main(int32_t s32_argc, char_t *c_argv_tab[])
     return a.exec();
 }
 
-QString encodeCoordinates(QString &s_gpsCoordinates)
+QString encodeCoordinates(const QString &s_gpsCoordinates)
 {
     QString s_gpsBinary;
-    for (int32_t i = 0; i < s_gpsCoordinates.size(); ++i)
+    for (int32_t s32_i = 0; s32_i < s_gpsCoordinates.size(); ++s32_i)
     {
-        QChar c = s_gpsCoordinates[i];
+        QChar c = s_gpsCoordinates[s32_i];
 
         s_gpsBinary.append(QString("%1").arg(c.unicode(), 8, 2, QChar('0')));
     }

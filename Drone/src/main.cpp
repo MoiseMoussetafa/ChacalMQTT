@@ -76,9 +76,9 @@ int32_t main(int32_t s32_argc, char_t *c_argv_tab[])
 QString encodeCoordinates(QString &s_gpsCoordinates)
 {
     QString s_gpsBinary;
-    for (int32_t i = 0; i < s_gpsCoordinates.size(); ++i)
+    for (int32_t s32_i = 0; s32_i < s_gpsCoordinates.size(); ++s32_i)
     {
-        QChar c = s_gpsCoordinates[i];
+        QChar c = s_gpsCoordinates[s32_i];
 
         s_gpsBinary.append(QString("%1").arg(c.unicode(), 8, 2, QChar('0')));
     }

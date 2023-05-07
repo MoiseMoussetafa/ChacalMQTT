@@ -43,4 +43,3 @@ Received and saved, read and decrypted by the Base project
 ## Demonstrations
 ![image](https://user-images.githubusercontent.com/72506988/236677713-7503023d-daa0-4197-b80b-403e1490a35e.png)
 ![image](https://user-images.githubusercontent.com/72506988/236677723-5329eb88-2789-40b7-8831-71d0a5f0cfed.png)
-

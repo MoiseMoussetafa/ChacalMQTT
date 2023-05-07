@@ -11,13 +11,12 @@ MainWindow::MainWindow(QWidget *parent)
     ui->textEdit1->setPlainText("Broker : mqtt://broker.emqx.io:1883\n\n"
                                 "Topic : /ynov/bordeaux/ChacalMQTT\n\n"
                                 "QoS : 2");
-    ui->textEdit2->setPlainText("Message décodé ci-dessous");
+    ui->textEdit2->setPlainText("Message décodé ci-dessous :");
 
     pixmap_image = QPixmap(":/prefix_img/received_image.png");
     ui->imageLabel->setPixmap(pixmap_image);
     ui->imageLabel->setScaledContents(true);
     connect(this, &MainWindow::signalImage, this, &MainWindow::processReceivedImage);
-
     connect(this, &MainWindow::signalCode, this, &MainWindow::processCode);
 }
 void MainWindow::processCode(QString gpsCoordinates_decoded)

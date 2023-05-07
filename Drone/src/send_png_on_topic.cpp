@@ -1,19 +1,21 @@
 #include "send_png_on_topic.h"
 #include <QFile>
+#include <iostream>
 
-bool send_png_on_topic(QMqttClient &client, const QString &filePath, const QString &topic, const quint8 qos)
+using namespace std;
+
+bool send_png_on_topic(QMqttClient &mqttClient, const QString &s_filePath, const QString &topic, const quint8 qos)
 {
     // Chargez le fichier PNG
-    QFile file(filePath);
-    if (!file.open(QIODevice::ReadOnly)) {
-        qDebug() << "Impossible de charger le fichier PNG";
+    QFile qf_file(s_filePath);
+    if (!qf_file.open(QIODevice::ReadOnly)) {
+        cerr << "Impossible de charger le fichier PNG" << endl;
         return false;
     }
 
-    QByteArray data = file.readAll();
-    //qDebug() << data;
+    QByteArray data = qf_file.readAll();
+
     // Publiez le fichier sur le topic avec le QoS spécifié
-    client.publish(topic, data, qos);
-    qDebug() <<  "send";
+    mqttClient.publish(topic, data, qos);
     return true;
 }

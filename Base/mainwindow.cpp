@@ -13,8 +13,6 @@ MainWindow::MainWindow(QWidget *parent)
                                 "QoS : 2");
     ui->textEdit2->setPlainText("Message décodé ci-dessous :");
 
-    pixmap_image = QPixmap(":/prefix_img/received_image.png");
-    ui->imageLabel->setPixmap(pixmap_image);
     ui->imageLabel->setScaledContents(true);
     connect(this, &MainWindow::signalImage, this, &MainWindow::processReceivedImage);
     connect(this, &MainWindow::signalCode, this, &MainWindow::processCode);

@@ -2,6 +2,14 @@
 <ui version="4.0">
  <class>MainWindow</class>
  <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>498</width>
+    <height>576</height>
+   </rect>
+  </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
@@ -31,13 +39,6 @@
     </item>
     <item>
      <layout class="QGridLayout" name="gridLayout">
-      <item row="0" column="0">
-       <widget class="QTextEdit" name="textEdit1">
-        <property name="acceptRichText">
-         <bool>false</bool>
-        </property>
-       </widget>
-      </item>
       <item row="0" column="1">
        <widget class="QTextEdit" name="textEdit2">
         <property name="acceptRichText">
@@ -45,15 +46,15 @@
         </property>
        </widget>
       </item>
-      <item row="1" column="0">
+      <item row="1" column="1">
        <widget class="QTextEdit" name="textEdit3">
         <property name="acceptRichText">
          <bool>false</bool>
         </property>
        </widget>
       </item>
-      <item row="1" column="1">
-       <widget class="QTextEdit" name="textEdit4">
+      <item row="0" column="0" rowspan="2">
+       <widget class="QTextEdit" name="textEdit1">
         <property name="acceptRichText">
          <bool>false</bool>
         </property>
@@ -68,8 +69,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>640</width>
-     <height>21</height>
+     <width>498</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

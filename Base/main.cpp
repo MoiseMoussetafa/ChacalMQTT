@@ -3,6 +3,7 @@
 #include <QtMqtt/QMqttClient>
 #include <QtGui/QImage>
 #include <QtCore/QBuffer>
+#include "common.h"
 
 QString decodeCoordinates(QImage &image)
 {
@@ -40,7 +41,7 @@ QString decodeCoordinates(QImage &image)
 }
 
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char_t *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
@@ -49,17 +50,19 @@ int main(int argc, char *argv[])
     mqttClient.setHostname("broker.emqx.io");
     mqttClient.setPort(1883);
 
-    QObject::connect(&mqttClient, &QMqttClient::connected, [&](){
+    QObject::connect(&mqttClient, &QMqttClient::connected, [&]()
+    {
         const QString s_topic("/ynov/bordeaux/ChacalMQTT");
         const quint8 qos_var = 2;
         mqttClient.subscribe(s_topic,qos_var);
     });
 
-    QObject::connect(&mqttClient, &QMqttClient::disconnected, [&](){
-        qDebug() << "Disconnected";
+    QObject::connect(&mqttClient, &QMqttClient::disconnected, [&]()
+    {
     });
 
-    QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message_tab, const QMqttTopicName& topic){
+    QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message_tab, const QMqttTopicName& topic)
+    {
         QImage image;
         image.loadFromData(message_tab, "PNG");
         QString s_gpsCoordinates_decoded = decodeCoordinates(image);
@@ -70,7 +73,6 @@ int main(int argc, char *argv[])
     });
 
     mqttClient.connectToHost();
-
     w.show();
     return a.exec();
 }

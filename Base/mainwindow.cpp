@@ -12,8 +12,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->textEdit3->setPlainText("QoS 2");
     ui->textEdit4->setPlainText("Message décodé = ");
 
-    pixmap_image = QPixmap(":/prefix_img/received_image.png");
-    ui->imageLabel->setPixmap(pixmap_image);
     ui->imageLabel->setScaledContents(true);
     connect(this, &MainWindow::signalImage, this, &MainWindow::processReceivedImage);
 

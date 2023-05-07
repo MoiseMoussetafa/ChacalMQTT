@@ -3,6 +3,7 @@
 #include <QtMqtt/QMqttClient>
 #include <QtGui/QImage>
 #include <QtCore/QBuffer>
+#include "common.h"
 
 QString decodeCoordinates(QImage &image)
 {
@@ -40,7 +41,7 @@ QString decodeCoordinates(QImage &image)
 }
 
 
-int main(int argc, char *argv[])
+int32_t main(int32_t argc, char_t *argv[])
 {
     QApplication a(argc, argv);
     MainWindow w;
@@ -59,7 +60,6 @@ int main(int argc, char *argv[])
     QObject::connect(&mqttClient, &QMqttClient::disconnected, [&]()
     {
     });
-
 
     QObject::connect(&mqttClient, &QMqttClient::messageReceived, [&](const QByteArray& message_tab, const QMqttTopicName& topic)
     {

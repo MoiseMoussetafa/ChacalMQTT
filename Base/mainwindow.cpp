@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include "common.h"
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -7,8 +8,8 @@ MainWindow::MainWindow(QWidget *parent)
 {
     ui->setupUi(this);
 
-    ui->textEdit1->setPlainText("Broker : mqtt://broker.emqx.io:1883\n"
-                                "Topic : /ynov/bordeaux/ChacalMQTT\n"
+    ui->textEdit1->setPlainText("Broker : mqtt://broker.emqx.io:1883\n\n"
+                                "Topic : /ynov/bordeaux/ChacalMQTT\n\n"
                                 "QoS : 2");
     ui->textEdit2->setPlainText("Message décodé ci-dessous :");
 

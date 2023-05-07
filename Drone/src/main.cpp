@@ -1,7 +1,6 @@
 #include <iostream>
 #include <QCoreApplication>
 #include <QImage>
-#include <QDebug>
 #include <QFile>
 #include <QtMqtt/QMqttClient>
 #include "send_png_on_topic.h"
@@ -10,11 +9,10 @@
 using namespace std;
 
 QString encodeCoordinates(QString &s_gpsCoordinates);
-QString decodeCoordinates(QImage &image);
 
-int32_t main(int32_t s32_argc, char_t *c_argv[])
+int32_t main(int32_t s32_argc, char_t *c_argv_tab[])
 {
-    QCoreApplication a(s32_argc, c_argv);
+    QCoreApplication a(s32_argc, c_argv_tab);
     QString s_gpsCoordinates = QString("37°42'41.9\"S 144°59'33.0\"E");
 
     QImage image(":/images/img/DroneIMG37337.png");
@@ -28,55 +26,50 @@ int32_t main(int32_t s32_argc, char_t *c_argv[])
 
     QString s_gpsBinary = encodeCoordinates(s_gpsCoordinates);
 
-    for (int32_t i = 0; i < s_gpsBinary.size(); ++i)
+    for (int32_t s32_i = 0; s32_i < s_gpsBinary.size(); ++s32_i)
     {
-        int32_t x = i % image.width();
-        int32_t y = i / image.width();
+        int32_t s32_x = s32_i % image.width();
+        int32_t s32_y = s32_i / image.width();
 
-        QRgb pixel = image.pixel(x, y);
+        QRgb pixel = image.pixel(s32_x, s32_y);
 
-        int32_t alpha = qAlpha(pixel);
-        int32_t red = qRed(pixel);
+        int32_t s32_alpha = qAlpha(pixel);
+        int32_t s32_red = qRed(pixel);
 
-        if (alpha == 0)
+        if (s32_alpha == 0)
         {
-            alpha = 1;
+            s32_alpha = 1;
         }
 
-        if (i < image.width() * image.height())
+        if (s32_i < image.width() * image.height())
         {
-            int32_t bit = s_gpsBinary[i].digitValue();
-            red = (red & ~1) | bit;
+            int32_t s32_bit = s_gpsBinary[s32_i].digitValue();
+            s32_red = (s32_red & ~1) | s32_bit;
         }
 
-        image.setPixel(x, y, qRgba(red, qGreen(pixel), qBlue(pixel), alpha));
+        image.setPixel(s32_x, s32_y, qRgba(s32_red, qGreen(pixel), qBlue(pixel), s32_alpha));
     }
 
     QFile qf_outputFile("../DroneIMG37337_with_gps.png");
     if (!qf_outputFile.open(QIODevice::WriteOnly))
     {
-        qDebug() << "Erreur : Impossible d'enregistrer l'image";
+        cerr << "Erreur : Impossible d'enregistrer l'image" << endl;
         return -1;
     }
-    image.save(&outputFile, "PNG");
+    image.save(&qf_outputFile, "PNG");
 
-    QString gpsCoordinates_decoded = decodeCoordinates(image);
+    QMqttClient mqttClient;
+    mqttClient.setHostname("broker.emqx.io");
+    mqttClient.setPort(1883);
 
-    qDebug() << gpsCoordinates_decoded;
-
-    QMqttClient client;
-    client.setHostname("broker.emqx.io");
-    client.setPort(1883);
-
-    QObject::connect(&client, &QMqttClient::connected, [&](void) {
-        qDebug() << "Connected to MQTT broker.";
+    QObject::connect(&mqttClient, &QMqttClient::connected, [&](void) {
         const QString s_topic("/ynov/bordeaux/ChacalMQTT");
         const quint8 qos_var = 2;
         const QString s_filePath("../DroneIMG37337_with_gps.png");
         send_png_on_topic(mqttClient, s_filePath, s_topic, qos_var);
     });
 
-    client.connectToHost();
+    mqttClient.connectToHost();
     return a.exec();
 }
 
@@ -91,39 +84,4 @@ QString encodeCoordinates(QString &s_gpsCoordinates)
     }
 
     return s_gpsBinary;
-}
-
-QString decodeCoordinates(QImage &image)
-{
-    QString s_tmpString = QString("");
-    QString s_gpsCoordinates_decoded;
-
-    for(int32_t x = 0; x < image.width(); ++x)
-    {
-        QRgb pixel = image.pixel(x, 0);
-
-        int32_t red = qRed(pixel);
-        int32_t alpha = qAlpha(pixel);
-
-        if(alpha == 0)
-        {
-            continue;
-        }
-
-        s_tmpString.append(QString::number(red & 0x01));
-
-        if(s_tmpString.length() == 8)
-        {
-            QChar c_thisChar = QChar(s_tmpString.toInt(nullptr, 2));
-            s_gpsCoordinates_decoded.append(c_thisChar);
-
-            if(c_thisChar.toUpper() == 'W' || c_thisChar.toUpper() == 'E')
-            {
-                break;
-            }
-            s_tmpString.clear();
-        }
-    }
-
-    return s_gpsCoordinates_decoded;
 }
